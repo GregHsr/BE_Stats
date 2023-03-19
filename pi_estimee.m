@@ -11,7 +11,7 @@ function [pi_chap] = pi_estimee(a0,a1,L,K)
     T=sum(Y.^p)
 
     % Calcul du seuil
-    lambda = a0 * chi2inv(1 - L_alpha,L)/2
+    lambda = a0 * chi2inv(1 - L_alpha,L)/2;
 
     for i =1:length(L_alpha)
         pi_chap(i) = length(find(T>lambda(i)))/length(T);
