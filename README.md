@@ -1,6 +1,6 @@
 # Bureau d'Etude: Etude Statistique de la vitesse du vent
 
-Ce projet est composé d'un code principal **maim.m** faisant appel aux différentes fonctions définies dans les fichiers annexes. 
+Ce projet est composé d'un code principal **main.m** faisant appel aux différentes fonctions définies dans les fichiers annexes. 
 
 #### Liste des fichiers de fonctions
 
