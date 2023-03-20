@@ -105,3 +105,60 @@ pi_est = pi_estimee(a0,a1,2*N,K);
 figure
 plot([0.01:0.01:0.99],pi_est);
 
+% Comparaison courbes COR
+
+a0 = 0.9;
+a1 = 1.5;
+N = 20;
+K = [50000 1000];
+alpha = [0.01:0.01:0.99];
+
+pi_th = pi_theorique(a0,a1,2*N);
+pi_est1 = pi_estimee(a0,a1,2*N,K(1));
+pi_est2 = pi_estimee(a0,a1,2*N,K(2));
+
+figure
+plot(alpha,pi_th,alpha,pi_est1,alpha,pi_est2)
+
+%% Partie 4
+
+load('wind.mat')
+
+figure
+histogram(test)
+
+param_est = wblfit(test);
+
+test_tri = sort(test);
+
+vent = [0:0.01:8];
+f_repart_th = [];
+
+for i = 1:length(vent)
+    f_repart_th(end+1) = 1 - exp(-(vent(i)/param_est(1))^(param_est(2)));
+end 
+
+f_repart_mes = [test_tri(1)/sum(test_tri)];
+
+for i = 2:length(test_tri)
+    f_repart_mes(end+1) = f_repart_mes(i-1)+test_tri(i)/sum(test_tri);
+end 
+
+figure
+plot(test_tri,f_repart_mes, vent, f_repart_th)
+
+% Test de Kolmogorov
+
+% Calcul des écarts
+L_Eplus = [];
+L_Emoins = [];
+
+for i = 1:length(test_tri)
+    [D1,D2] = ecarts(test_tri,i);
+    L_Eplus(end+1) = D1;
+    L_Emoins(end+1) = D2;
+end 
+
+D = max(max(L_Emoins),max(L_Eplus))
+
+D_th = kstest(test_tri)

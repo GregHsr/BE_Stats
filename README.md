@@ -15,5 +15,5 @@ Ce projet est composé d'un code principal **main.m** faisant appel aux différe
 - Placer dans un unique répertoire (en dézippant le dossier rendu ou à l'aide de "git clone") le code main.m ainsi que toutes les fonctions.
 - Ouvrir ce répertoire dans Matlab.
 - Ecrire dans le terminal :
-``` maim.m ```
+``` main.m ```
 - Exécuter le programme.
