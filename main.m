@@ -30,6 +30,9 @@ histfit(Y2(:,1));
 L_moy = [];
 L_var = [];
 
+moy_th = theta * gamma(1+(1/p));
+var_th = theta * theta * gamma(1+(2/p)) - moy_th*moy_th;
+
 for j = 1:K1C
     L_moy(end+1) = mean(Y2(:,j));
     L_var(end+1) = var(Y2(:,j));
@@ -46,8 +49,11 @@ amv = estimateur_mv(Y2,N1C,K1C);
 moy_amv = mean(amv);
 var_amv = var(amv);
 
+moy_amv_th = theta^p;
+var_amv_th = ((theta^p)^2)/N1C;
+
 figure
-plot([1:K1C],amv,'.', [1:K1C], repelem(moy_amv,K1C), [1:K1C], repelem(moy_amv-var_amv,K1C), "k", [1:K1C], repelem(moy_amv+var_amv,K1C), "k");
+plot([1:K1C],amv,'.', [1:K1C], repelem(moy_amv,K1C), [1:K1C], repelem(moy_amv-sqrt(var_amv),K1C), "k", [1:K1C], repelem(moy_amv+sqrt(var_amv),K1C), "k");
 
 %% Partie 3
 
@@ -129,8 +135,6 @@ histogram(test)
 
 param_est = wblfit(test);
 
-test_tri = sort(test);
-
 vent = [0:0.01:8];
 f_repart_th = [];
 
@@ -138,14 +142,29 @@ for i = 1:length(vent)
     f_repart_th(end+1) = 1 - exp(-(vent(i)/param_est(1))^(param_est(2)));
 end 
 
-f_repart_mes = [test_tri(1)/sum(test_tri)];
+% Pour 100 données
 
-for i = 2:length(test_tri)
-    f_repart_mes(end+1) = f_repart_mes(i-1)+test_tri(i)/sum(test_tri);
+test_tri100 = sort(test(1:100));
+
+f_repart_mes100 = [];
+
+for i = 1:length(test_tri100)
+    f_repart_mes100(end+1) = i/length(test_tri100);
+end 
+
+% Pour toutes les données
+
+test_tri = sort(test);
+
+f_repart_mes = [];
+
+for i = 1:length(test_tri)
+    f_repart_mes(end+1) = i/length(test);
 end 
 
 figure
-plot(test_tri,f_repart_mes, vent, f_repart_th)
+subplot(2,1,1),plot(test_tri100,f_repart_mes100, vent, f_repart_th)
+subplot(2,1,2),plot(test_tri,f_repart_mes, vent, f_repart_th)
 
 % Test de Kolmogorov
 
@@ -161,4 +180,8 @@ end
 
 D = max(max(L_Emoins),max(L_Eplus))
 
-D_th = kstest(test_tri)
+% Calcul du seuil S_alpha
+
+S_alpha = 0.9 * 0.5 * chi2inv(1-0.99,2*length(test))
+
+D_th = kstest(test_tri,"Alpha",0.99)
