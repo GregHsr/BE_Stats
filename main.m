@@ -53,7 +53,8 @@ moy_amv_th = theta^p;
 var_amv_th = ((theta^p)^2)/N1C;
 
 figure
-plot([1:K1C],amv,'.', [1:K1C], repelem(moy_amv,K1C), [1:K1C], repelem(moy_amv-sqrt(var_amv),K1C), "k", [1:K1C], repelem(moy_amv+sqrt(var_amv),K1C), "k");
+plot([1:K1C],amv,'.', [1:K1C], repelem(moy_amv,K1C), [1:K1C], repelem(moy_amv*(1+(1.96/sqrt(N1C))),K1C), "k", [1:K1C], repelem(moy_amv*(1-(1.96/sqrt(N1C))),K1C), "k");
+
 
 %% Partie 3
 
@@ -163,8 +164,8 @@ for i = 1:length(test_tri)
 end 
 
 figure
-subplot(2,1,1),plot(test_tri100,f_repart_mes100, vent, f_repart_th)
-subplot(2,1,2),plot(test_tri,f_repart_mes, vent, f_repart_th)
+subplot(2,1,1),plot(test_tri100,f_repart_mes100,".", vent, f_repart_th)
+subplot(2,1,2),plot(test_tri,f_repart_mes,".", vent, f_repart_th)
 
 % Test de Kolmogorov
 
@@ -180,8 +181,12 @@ end
 
 D = max(max(L_Emoins),max(L_Eplus))
 
+% Test de Kolmogorov-Smirnov avec la fonction kstest
+
+[h_t, p_t, ksstat_t, cv_t] = kstest(test_tri, 'CDF', [test_tri, wblcdf(test_tri, param_est(1), param_est(2))])
+
 % Calcul du seuil S_alpha
+lambda_alpha = 0.9 * 0.5 * chi2inv(1-0.99,2*length(test))
 
-S_alpha = 0.9 * 0.5 * chi2inv(1-0.99,2*length(test))
 
-D_th = kstest(test_tri,"Alpha",0.99)
+
