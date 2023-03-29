@@ -185,8 +185,50 @@ D = max(max(L_Emoins),max(L_Eplus))
 
 [h_t, p_t, ksstat_t, cv_t] = kstest(test_tri, 'CDF', [test_tri, wblcdf(test_tri, param_est(1), param_est(2))])
 
-% Calcul du seuil S_alpha
-lambda_alpha = 0.9 * 0.5 * chi2inv(1-0.99,2*length(test))
+% Calcul du seuil lambda_alpha
+lambda_alpha = kolminv(1-0.05)/sqrt(length(test_tri))
 
+%% Analyse des mesures de Toulouse_Blagnac
 
+load('mesure_Toulouse.mat')
+
+figure
+histfit(mesure, 30,"weibull");
+
+figure
+histogram(mesure)
+
+param_est_Toul = wblfit(mesure)
+
+mesure_tri = sort(mesure).';
+
+f_repart_Toul = [];
+
+for i = 1:length(mesure_tri)
+    f_repart_Toul(end+1) = i/length(mesure);
+end 
+
+figure
+plot(mesure_tri,f_repart_Toul,".", vent, f_repart_th)
+
+% Test de Kolmogorov
+
+% Calcul des écarts
+L_Eplus_Toul = [];
+L_Emoins_Toul = [];
+
+for i = 1:length(mesure_tri)
+    [D1,D2] = ecarts(mesure_tri,i);
+    L_Eplus_Toul(end+1) = D1;
+    L_Emoins_Toul(end+1) = D2;
+end 
+
+D = max(max(L_Emoins_Toul),max(L_Eplus_Toul))
+
+% Test de Kolmogorov-Smirnov avec la fonction kstest
+
+[h_tou, p_tou, ksstat_tou, cv_tou] = kstest(mesure_tri, 'CDF', [mesure_tri, wblcdf(mesure_tri, param_est_Toul(1), param_est_Toul(2))])
+
+% Calcul du seuil lambda_alpha
+lambda_alpha = kolminv(1-0.05)/sqrt(length(mesure_tri))
 
