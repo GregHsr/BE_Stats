@@ -15,9 +15,9 @@ Il est aussi composé d'un code python permettant de récupérer les données m�
 
 #### Comment faire tourner ce code
 
-- Placer dans un unique répertoire (en dézippant le dossier rendu ou à l'aide de "git clone") le code main.m ainsi que toutes les fonctions.
+- Placer dans un unique répertoire le code main.m ainsi que toutes les fonctions (en dézippant le dossier rendu, ou à l'aide de "git clone" : ``` git clone https://github.com/GregHsr/BE_Stats ``` pour télécharger tous les fichiers dans le répertoire courant).
 - Ouvrir ce répertoire dans Matlab.
-- Ecrire dans le terminal :
+- Ecrire dans le terminal Matlab:
 ``` main.m ```
 - Exécuter le programme.
 
@@ -25,7 +25,7 @@ Il est aussi composé d'un code python permettant de récupérer les données m�
 
 Ce répertoire contient également un certains nombres de fichiers autres:
 - README.md : ce fichier
-- : le rapport de l'étude
+- rapport_MATHIEU_HUSSER.pdf : le rapport de l'étude
 - Martin1999.pdf : le papier de référence
 - Be_Stats_vent.pdf : le sujet de l'étude
 - wind.mat : fichier de données du sujet
