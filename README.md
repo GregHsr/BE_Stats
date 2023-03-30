@@ -18,8 +18,8 @@ Il est aussi composé d'un code python permettant de récupérer les données m�
 - Placer dans un unique répertoire le code main.m ainsi que toutes les fonctions (en dézippant le dossier rendu, ou à l'aide de "git clone" : ``` git clone https://github.com/GregHsr/BE_Stats ``` pour télécharger tous les fichiers dans le répertoire courant).
 - Ouvrir ce répertoire dans Matlab.
 - Ecrire dans le terminal Matlab:
-``` main.m ```
-- Exécuter le programme.
+``` main ```
+- Laisser le programme s'exécuter.
 
 #### Autres documents
 
